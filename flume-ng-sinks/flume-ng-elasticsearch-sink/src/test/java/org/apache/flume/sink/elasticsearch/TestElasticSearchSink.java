@@ -401,6 +401,18 @@ public class TestElasticSearchSink extends AbstractElasticSearchSinkTest {
     assertTrue(fixture.getIndexNameBuilder() instanceof FakeIndexNameBuilder);
   }
 
+  @Test
+  public void shouldPassDateFormatToIndexNameBuilder() throws Exception {
+    Context context = new Context();
+    String dateFormat = "yyyy.MM.dd-HH";
+    context.put(ElasticSearchSinkConstants.INDEX_NAME_BUILDER_PREFIX + TimeBasedIndexNameBuilder.DATE_FORMAT,
+            dateFormat);
+
+    assertNull(fixture.getIndexNameBuilder());
+    fixture.configure(context);
+    assertEquals(((TimeBasedIndexNameBuilder) fixture.getIndexNameBuilder()).getFastDateFormat().getPattern(), dateFormat);
+  }
+
   public static class FakeConfigurable implements Configurable {
     @Override
     public void configure(Context arg0) {

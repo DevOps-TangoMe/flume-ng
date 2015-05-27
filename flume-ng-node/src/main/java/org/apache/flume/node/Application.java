@@ -90,6 +90,7 @@ public class Application {
   }
 
   public synchronized void stop() {
+    stopAllComponents();
     supervisor.stop();
     if(monitorServer != null) {
       monitorServer.stop();
